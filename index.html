@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Copyboard</title>
+	<link rel="icon" type="image/png" href="./cop.png"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+  </head>
+  <body>
+  <!--Estructura 1-->
+  <div class="container-fluid bg-gradient-warning">
+    <div class="row">
+	  <div class="col col-md-12">
+		  <div class="card text-center">
+		  <div class="card-header">
+		   <strong>Convertidor</strong>
+		   <a href="./converter.html" class="btn btn-outline-success btn-sm mx-md-3">Convertir🔃</a>
+		  </div>
+		</div>
+		
+	  </div>
+	</div>
+	
+  <br/>   
+  <div id="alertId" class="row d-none">
+	<div class="col col-md-12">
+		<div class="alert alert-primary alert-dismissible fade show" role="alert">
+		  <strong><span id="textAlertId"></span></strong>
+		  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+		    <span aria-hidden="true">&times;</span>
+		  </button>
+	  	</div>	
+	</div>
+  </div>
+	
+	<br/>
+  <div class="row">
+  <div class="col col-md-4">
+  <div class="card border-primary">
+  <div class="card-header font-weight-bold">
+    ROW
+	 <div class="form-group">
+	   <!--<input type="text" id="campos1" name="campos1" class="form-input col-2"> -->
+	   <select id="campos1" name="campos1" class="custom-select border border-info col-3">
+	   <option value="" selected>Default</option>
+	   <option value="1">1 Col</option>
+	   <option value="2">2 Col</option>
+	   <option value="6">6 Col</option>
+	   <option value="date">Date</option>
+	   <option value="header">Header</option>
+	   </select>
+	   <label for="campos1">N° Campos [date,1,2,6,'']</label>
+	 </div>
+  </div>
+  <div class="card-body">
+    <h5 class="card-title text-primary">Estructura <u>Row</u></h5>
+    <textarea class="card-text mb-2 text-muted" id="textArea" rows="8" cols="40"><div class="row">
+	<div class="col-2"><div class="form_texto">:</div></div>
+	<div class="col-4"><div class="form_campo"></div></div>
+	<div class="col-2"><div class="form_texto">:</div></div>
+	<div class="col-4"><div class="form_campo"></div></div>
+	</div></textarea>
+    <script language="JavaScript" type="text/javascript">
+	const formatDate = (format) => {	
+	format = format === null || format === undefined ? 'YYYYMMDD' : format;
+	
+	let date = new Date();
+	let day = date.getDate() < 10 ? `0${date.getDate()}`: date.getDate();
+	let month = date.getMonth() + 1;
+	let year = date.getFullYear();
+	
+	let dateFormated = format.replace('DD', day);
+	dateFormated = dateFormated.replace('MM', month);
+	dateFormated = dateFormated.replace('YYYY', year);
+
+	return dateFormated;
+	}
+    
+    
+    const copyContent = (content, structure) => {
+	    content.select();
+	    document.execCommand('copy');
+	
+		document.getElementById('textAlertId').innerText = `Estructura ${structure} Copiada!👌🏼✌🏽🤙🏼`;
+	
+	 	document.getElementById('alertId').classList.remove('d-none');
+	 	
+
+	  	setTimeout(() => {
+		 	document.getElementById('alertId').classList.add('d-none');
+	    	console.log("Copiado!");
+	 	}, 2000);
+	 	
+	 	setTimeout(() => {
+	 		console.clear();
+	 	}, 5000);
+    }
+    
+    
+    
+    function delay(ms) {
+	  return new Promise(resolve => setTimeout(resolve, ms));
+	}
+	let campos1 = document.getElementById('campos1');
+	function copyToClipBoard() {
+	let content = document.getElementById('textArea');
+	
+	switch(campos1.value.toLowerCase()){
+	case '1':
+		content.value =`<div class="row">
+  <div class="col-12"><div class="form_seccion"></div></div>
+</div>`
+		break;
+	
+	case '2':
+		content.value =`<div class="row">
+  <div class="col-2m"><div class="form_texto">:</div></div>
+  <div class="col-10"><div class="form_campo"></div></div>
+</div>`
+		break;
+		
+	case 'date':
+		content.value =`<input type="date" class="form_input" id="id_id" name="id_id" value="" size="9" >`
+		break;
+		
+	case '6':
+		content.value =`<div class="row">
+  <div class="col-2"><div class="form_texto">:</div></div>
+  <div class="col-2"><div class="form_campo"></div></div>
+  <div class="col-2"><div class="form_texto">:</div></div>
+  <div class="col-2"><div class="form_campo"></div></div>
+  <div class="col-2"><div class="form_texto">:</div></div>
+  <div class="col-2"><div class="form_campo"></div></div>
+</div>`
+		break;
+		
+	case 'header':
+		content.value =`        <div class="form_header">
+        <div class="row">
+        <div class="col-12"><div class="form_titulo">Titulo</div></div>
+        </div>
+        <div class="row">
+        <div class="col-12"><div class="form_explicacion">Para modificar un Registro, hacer click sobre el Código respectivo.</div></div>
+        </div>
+        </div> <?php // form_header ?>`
+		break;
+		
+	default:
+		content.value =`<div class="row">
+  <div class="col-2"><div class="form_texto">:</div></div>
+  <div class="col-4"><div class="form_campo"></div></div>
+  <div class="col-2"><div class="form_texto">:</div></div>
+  <div class="col-4"><div class="form_campo"></div></div>
+</div>`;
+		break;
+	}
+	
+        
+	copyContent(content, 'Row');
+ 	
+	}
+	
+	</script>
+    <button class="btn btn-outline-info btn-sm float-right" onClick="copyToClipBoard()">Copy</button>
+    
+    </div>
+  	</div>
+  	
+    </div><!-- Fin row -->
+	  <!--FIN Estructura 1-->
+<!--==========================================================================================================================-->
+	  <!--Estructura 2-->
+	<div class="col col-md-4">
+	 <div class="card border-primary">
+	 <div class="card-header font-weight-bold">
+	   FORM DATA
+    <div class="form-group">
+      <input type="checkbox" aria-label="Checkbox 1" id="cien1">
+      <label for="cien1">100?</label>
+     </div>
+	 </div>
+	 <div class="card-body">
+    <h5 class="card-title text-primary">Estructura <u>Form Data</u></h5>
+	<textarea class="card-text mb-2 text-muted" id="textArea2" rows="8" cols="40">"<div class="form_data100"> <?php //dfd_026 ?>
+	<div class="row">
+	<div class="col-12"><div class="form_seccion"></div></div>
+	</div>
+	</div> <?php //fin dfd_0${i2} ?>"</textarea>
+	
+	<script language="JavaScript" type="text/javascript">
+	let i2="00";
+	let check1 = document.getElementById('cien1')
+
+	function copyToClipBoard2() {
+	i2++;	
+	let textArea2 = document.getElementById('textArea2');
+	let cien1 = '';
+	if(check1.checked){
+		cien1 = 100;
+	 }
+	textArea2.value=`<div class="form_data${cien1}"> <?php //dfd_00${i2} ?>
+<div class="row">
+<div class="col-12"><div class="form_seccion"></div></div>
+</div>
+</div> <?php //fin dfd_00${i2} ?>`
+	
+    let content = document.getElementById('textArea2');
+    
+    copyContent(content,`Form Data ${cien1}`);
+ 	    
+	}
+	
+	</script>
+    <button class="btn btn-outline-info btn-sm float-right" onClick="copyToClipBoard2()">Copy</button>
+        
+    </div>
+  	</div>
+    
+    </div><!-- Fin row -->
+	  <!--FIN Estructura 2-->
+<!--==========================================================================================================================-->
+	    <!--Estructura 3-->
+    <div class="col col-md-4">
+  <div class="card border-primary">
+  <div class="card-header font-weight-bold">
+    FORM LIST
+  <div class="form-group">
+ 	<input type="checkbox" aria-label="Checkbox 2" id="cien2">
+  	<label for="cien2">100?</label>
+  </div>
+  </div>
+  <div class="card-body">
+    <h5 class="card-title text-primary">Estructura <u>Form List</u></h5>
+	<textarea class="card-text mb-2 text-muted" id="textArea3" rows="8" cols="40">"<div class="form_list100"> <?php //dfl_00${i3} ?>
+
+
+</div> <?php //fin dfl_00${i3} ?>"</textarea>
+
+    <script language="JavaScript" type="text/javascript">
+   	let i3="00";
+	let check2 = document.getElementById('cien2')
+
+	function copyToClipBoard3() {
+	i3++;	
+	let textArea3 =document.getElementById('textArea3');
+	let cien2 = '';
+	if(check2.checked){
+		cien2 = 100;
+ 	}
+ 	
+	textArea3.value=`<div class="form_list${cien2}"> <?php //dfl_00${i3} ?>
+
+
+</div> <?php //fin dfl_00${i3} ?>`
+	
+    let content = document.getElementById('textArea3');
+    
+	copyContent(content, `Form List ${cien2}`);
+ 	
+	}
+	
+	</script>
+    <button class="btn btn-outline-info btn-sm float-right" onClick="copyToClipBoard3()">Copy</button>
+    
+    </div>
+  	</div>
+  	
+  	    
+    </div>    
+    </div>  
+    
+  <br/>     
+     
+	  <!--FIN Estructura 3-->
+<!--==========================================================================================================================-->
+
+  <div class="row">
+  <div class="col col-md-4 mx-auto">
+  <div class="card border-primary">
+  <div class="card-header font-weight-bold">
+    Extras
+	 <div class="form-group">
+	   <!-- <input type="text" id="camposExtra" name="camposExtra" class="form-input col-4"> -->
+	   <select id="camposExtra" name="camposExtra" class="custom-select border border-info col-6">
+	   <option value="" selected>Default</option>
+	   <option value="header html">Header Show/Edit</option>
+	   <option value="hidden">Hidden</option>
+	   <option value="redirect">Redirect</option>
+	   <option value="redirect add">Redirect Add</option>
+	   <option value="buttontable">Buttontable</option>
+	   <option value="main key">Main Key</option>
+	   <option value="vs serie">Vs Serie</option>
+	   </select>
+	   <button id='btnExtra' class='btn btn-outline-dark btn-sm'>Reiniciar</button>
+	   <label for="camposExtra">Campos [header html, redirect,hidden...]</label>
+	 </div>
+  </div>
+  <div class="card-body">
+    <h5 class="card-title text-primary">Estructuras <u>Extra</u></h5>
+    <textarea class="card-text mb-2 text-muted" id="textAreaExtra" rows="8" cols="40">Debe ingresar la estructura que desea copiar
+		*header html
+		*hidden
+		*redirect
+		*redirect add
+		*buttontable
+		*main key
+		*vs serie</textarea>
+    <script language="JavaScript" type="text/javascript">   
+	let camposExtra = document.getElementById('camposExtra');
+	let btnExtra = document.getElementById('btnExtra');
+      
+	btnExtra.addEventListener('click', () => {
+		camposExtra.value = '';
+		textAreaExtra.value =`Debe ingresar la estructura que desea copiar
+		*header html
+		*hidden
+		*redirect
+		*redirect add
+		*buttontable
+		*main key
+		*vs serie
+		`;
+	})
+	
+	function copyToClipBoard4() {
+	let textAreaExtra = document.getElementById('textAreaExtra');
+	
+	switch(camposExtra.value.toLowerCase()){
+	
+	case 'hidden':
+		textAreaExtra.value =`<input type="hidden" name="causa_anular_id" value="" />`
+		break;
+
+	case 'redirect add':
+		textAreaExtra.value =`$adicionales = '<input type="hidden" name="bodega_id" value="' . $row->bodega_id . '" />';
+formRedirect('producto_id', $row->producto_id, $mosmsg, $vs_modulo, $vs_proceso, 'edit', $adicionales);`
+		break;
+		
+	case 'redirect':
+		textAreaExtra.value =`formRedirect('producto_id', $row->producto_id, $mosmsg, $vs_modulo, $vs_proceso, 'edit', '');`
+		break;
+
+	case 'buttontable':
+		textAreaExtra.value =`<input type="button" class="buttontable" name="cargar_registroo" size="10" value="<?php echo $row->causa_anular_id; ?>" onclick="cargarORegistro('<?php echo $row->causa_anular_id; ?>');"/>`
+		break;
+		
+	case 'vs serie':
+		textAreaExtra.value =`$vs_serie = '${formatDate()}'; // Se actualiza el redireccionamiento (mosRedirect por formRedirect) - Hasm
+$vs_serie = '${formatDate()}'; // Se separa en scripts independientes el shtml y ehtml - Hasm`
+		break;
+		
+	case 'main key':
+		textAreaExtra.value =`
+// para que si vengo de otro modulo no traiga los datos
+if (isset($_POST['pin_proceso'])) {
+    if ($_POST['pin_proceso'] != $vs_proceso) {
+        $clasifica_inv_id = 0;
+    }
+}
+
+// cuando viene llamada de otra pantalla se verifica ssmodificar
+$ssmodificar = strval( mosGetParam( $_POST, 'ssmodificar', '' ) );
+$assmodificar = explode('::', $ssmodificar);
+
+// si esta definida se ssmodificar toman lo sdatos de ahi
+if (isset($assmodificar[1])) {
+    $clasifica_inv_id = $assmodificar[0];
+}`
+		break;
+				
+	case 'header html':
+		textAreaExtra.value =`global $my, $mosConfig_absolute_path, $mosConfig_live_site;
+	    $validador_js = $mosConfig_live_site . '/modulos/almacen/admin.' . $vs_proceso . '_mini.js';
+	    include $mosConfig_absolute_path . '/modulos/' . $vs_modulo . '/admin.' . $vs_proceso . '.shtml.php';
+		`
+		break;
+				
+		
+	default:
+		textAreaExtra.value =`Debe ingresar la estructura que desea copiar
+		*header html
+		*hidden
+		*redirect
+		*redirect add
+		*buttontable
+		*main key
+		*vs serie
+		`;
+		break;
+	}
+	
+        
+	copyContent(textAreaExtra, 'Extra');
+ 	
+	}
+	
+	
+	</script>
+    <button class="btn btn-outline-info btn-sm float-right" onClick="copyToClipBoard4()">Copy</button>
+    
+    </div>
+  	</div>
+  	</div>
+  	
+    </div><!-- Fin row -->
+	  <!--FIN Estructura 4-->
+<!--==========================================================================================================================-->
+
+
+   </div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
+  </body>
+</html>
